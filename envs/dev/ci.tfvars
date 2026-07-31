@@ -1,0 +1,6 @@
+aws_account_id= "000000000000"
+
+monthly_budget_usd = 10
+cors_origins
+= ["http://localhost:3000", "http://localhost:5173"]
+log_retention_days = 14

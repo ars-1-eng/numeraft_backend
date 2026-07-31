@@ -1,0 +1,44 @@
+# ---------- Terraform ---------
+**/.terraform/*
+.build/
+*.tfstate
+*.tfstate.*
+*.tfplan
+*.tfplan.json
+crash.log
+crash.*.log
+override.tf
+override.tf.json
+*_override.tf
+plan.txt
+plan.trimmed.txt
+
+# .terraform.lock.hcl is a dependency lock file. COMMIT IT.
+!.terraform.lock.hcl
+
+# Local values. Only the .example versions are committed.
+*.tfvars
+backend.hcl
+!*.tfvars.example
+!backend.hcl.example
+!ci.tfvars
+
+# ---------- Node ---------
+node_modules/
+services/dist/
+*.tsbuildinfo
+npm-debug.log*
+
+# ---------- Never ---------
+.env
+.env.*
+*.pem
+*.p12
+*.key
+
+# ---------- Editors / OS ---------
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/*
+!.vscode/extensions.json

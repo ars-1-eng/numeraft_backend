@@ -1,0 +1,5 @@
+aws_account_id = "000000000000"
+aws_region= "eu-west-1"
+github_owner= "ars-1-eng"
+
+github_repo= "numeraft"
