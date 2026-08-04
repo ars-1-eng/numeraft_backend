@@ -1,0 +1,25 @@
+{
+
+"compilerOptions": {
+"target": "ES2024",
+"lib": ["ES2024"],
+"module": "NodeNext",
+"moduleResolution": "NodeNext",
+"allowImportingTsExtensions": true,
+"erasableSyntaxOnly": true,
+"verbatimModuleSyntax": true,
+"noEmit": true,
+"strict": true,
+"noUncheckedIndexedAccess": true,
+"exactOptionalPropertyTypes": true,
+"noImplicitOverride": true,
+"noUnusedLocals": true,
+"noUnusedParameters": true,
+"useUnknownInCatchVariables": true,
+"forceConsistentCasingInFileNames": true,
+"skipLibCheck": true,
+"sourceMap": true,
+"types": ["node", "aws-lambda"]
+},
+"include": ["src/**/*.ts", "test/**/*.ts"]
+}
