@@ -1,3 +1,5 @@
+//Check Terraform code for mistakes before terraform plan/apply
+
 plugin "terraform" {
 enabled = true
 preset = "recommended"

@@ -1,8 +1,9 @@
 bucket= "numeraft-tfstate-000000000000-eu-west-1"
 
-key= "envs/dev/terraform.tfstate"
-region="eu-west-1"
+key= "envs/prod/terraform.tfstate"
 
-encrypt= true 
+region= "eu-west-1"
+
+encrypt= true
 
 use_lockfile = true

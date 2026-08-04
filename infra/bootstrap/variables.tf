@@ -19,7 +19,7 @@ type= string
 }
 
 variable "github_repo" {
-description = "GitHub repository name."
-type= string
-default= numeraft
+  description = "GitHub repository name."
+  type        = string
+  default     = "numeraft_backend"
 }

@@ -1,0 +1,9 @@
+bucket= "numeraft-tfstate-000000000000-eu-west-1"
+
+key= "bootstrap/terraform.tfstate"
+
+region= "eu-west-1"
+
+encrypt= true
+
+use_lockfile = true
