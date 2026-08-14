@@ -1,27 +1,30 @@
 // Lambda → Integration → Route → Permission
 
 module "fn" {
-source= "../lambda-fn"
-for_each = var.routes
-name= "${var.name_prefix}-${each.value.handler}"
+  source   = "../lambda-fn"
+  for_each = var.routes
+  name     = "${var.name_prefix}-${each.value.handler}"
 
-source_dir= "${var.services_dist_dir}/${each.value.handler}"
+  source_dir = "${var.services_dist_dir}/${each.value.handler}"
 
-account_id= var.account_id
+  account_id = var.account_id
 
-memory_mb= each.value.memory_mb
+  memory_mb = each.value.memory_mb
 
-timeout_seconds= each.value.timeout_seconds
+  timeout_seconds = each.value.timeout_seconds
 
-environment_variables = each.value.env
-extra_policy_json= each.value.policy_json
+  environment_variables = merge(var.common_env, lookup(var.route_env, each.key, {}))
+  extra_policy_json     = lookup(var.route_policies, each.key, null)
+  attach_extra_policy = contains(
+    keys(var.route_policies),
+    each.key
+  )
+  reserved_concurrency = each.value.reserved_concurrency
+  log_retention_days   = var.log_retention_days
 
-reserved_concurrency = each.value.reserved_concurrency
-log_retention_days= var.log_retention_days
+  log_level = var.log_level
 
-log_level= var.log_level
-
-tags = { Component = "api" }
+  tags = { Component = "api" }
 }
 
 resource "aws_apigatewayv2_integration" "fn" {
@@ -36,7 +39,7 @@ resource "aws_apigatewayv2_integration" "fn" {
   timeout_milliseconds   = 29000
 }
 
-resource  "aws_apigatewayv2_route" "fn" {
+resource "aws_apigatewayv2_route" "fn" {
   for_each = var.routes
 
   api_id    = aws_apigatewayv2_api.http.id
@@ -46,7 +49,7 @@ resource  "aws_apigatewayv2_route" "fn" {
 
   authorization_type = each.value.authorization
 
-  authorizer_id = each.value.authorization == "JWT"? one(aws_apigatewayv2_authorizer.jwt[*].id): null
+  authorizer_id = each.value.authorization == "JWT" ? one(aws_apigatewayv2_authorizer.jwt[*].id) : null
 
   lifecycle {
     precondition {

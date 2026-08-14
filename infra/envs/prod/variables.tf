@@ -72,3 +72,15 @@ variable "api_throttle_rate" {
   type        = number
   default     = 50
 }
+
+variable "allow_self_signup" {
+description = "Whether the internet may self-register. False for the private beta."
+type= bool
+default= false
+
+}
+variable "mfa_configuration" {
+description = "Cognito MFA setting: OFF, OPTIONAL or ON."
+type= string
+default="OPTIONAL"
+}

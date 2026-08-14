@@ -46,7 +46,7 @@ variable "monthly_budget_usd" {
 variable "cors_origins" {
   description = "Browser origins allowed to call the API."
   type        = list(string)
-  default     = [
+  default = [
     "http://localhost:3000",
     "http://localhost:5173"
   ]
@@ -74,4 +74,15 @@ variable "api_throttle_rate" {
   description = "Stage steady-state requests per second."
   type        = number
   default     = 10
+}
+variable "allow_self_signup" {
+  description = "Whether the internet may self-register. False for the private beta."
+  type        = bool
+  default     = false
+
+}
+variable "mfa_configuration" {
+  description = "Cognito MFA setting: OFF, OPTIONAL or ON."
+  type        = string
+  default     = "OPTIONAL"
 }

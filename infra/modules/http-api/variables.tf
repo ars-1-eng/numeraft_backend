@@ -67,8 +67,9 @@ variable "jwt_audiences" {
 
 variable "routes" {
   description = <<-EOT
-    Map of "METHOD /path" to its handler configuration. The key is the API
-    Gateway route key. `handler` must match a name in services/handlers.json.
+    Map of "METHOD /path" to its handler configuration. Keep this map free
+    of computed values: everything here must be known at plan time. Values
+    that reference other resources go in route_env or route_policies.
   EOT
 
   type = map(object({
@@ -76,8 +77,6 @@ variable "routes" {
     authorization        = optional(string, "NONE")
     memory_mb            = optional(number, 512)
     timeout_seconds      = optional(number, 10)
-    env                  = optional(map(string), {})
-    policy_json          = optional(string)
     reserved_concurrency = optional(number, -1)
   }))
 
@@ -98,4 +97,21 @@ variable "routes" {
 
     error_message = "Route keys must look like \"GET /health\"."
   }
+}
+
+
+variable "route_env" {
+  description = "Environment variables per route key. May contain computed values."
+  type        = map(map(string))
+  default     = {}
+}
+variable "route_policies" {
+  description = "IAM policy document JSON per route key. May contain computed values."
+  type        = map(string)
+  default     = {}
+}
+variable "common_env" {
+  description = "Environment variables given to every handler."
+  type        = map(string)
+  default     = {}
 }

@@ -5,37 +5,37 @@
 // Define the notification Channel
 
 
-resource "aws_sns_topic" "alerts"{
-    name = "${var.name_prefix}-alerts"
-    tags = {
-      Component ="observability" 
-    }
+resource "aws_sns_topic" "alerts" {
+  name = "${var.name_prefix}-alerts"
+  tags = {
+    Component = "observability"
+  }
 }
 
 
 //   Add the Recipient
 
-resource "aws_sns_topic_subscription" "email"{
-    topic_arn = aws_sns_topic.alerts.arn
-    endpoint = var.alert_email
-    protocol = "email"
+resource "aws_sns_topic_subscription" "email" {
+  topic_arn = aws_sns_topic.alerts.arn
+  endpoint  = var.alert_email
+  protocol  = "email"
 }
 
 
 // Publish Policy
 
-data "aws_iam_policy_document" "alerts"{
-    statement {
-      sid = "AllowCloudWatchAlarms"
-      effect = "Allow"
-      actions = [ "sns:Publish" ]
-      principals {
-        type = "Service"
-identifiers = ["cloudwatch.amazonaws.com", "budgets.amazonaws.com"]
-      }
-      resources = [aws_sns_topic.alerts.arn]
-
+data "aws_iam_policy_document" "alerts" {
+  statement {
+    sid     = "AllowCloudWatchAlarms"
+    effect  = "Allow"
+    actions = ["sns:Publish"]
+    principals {
+      type        = "Service"
+      identifiers = ["cloudwatch.amazonaws.com", "budgets.amazonaws.com"]
     }
+    resources = [aws_sns_topic.alerts.arn]
+
+  }
 }
 
 
