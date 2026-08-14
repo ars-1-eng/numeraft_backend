@@ -6,6 +6,14 @@ import { logger } from "../lib/logger.ts";
 import type { BootstrapResponse } from "../contracts/me.ts";
 const USER_POOL_ID = process.env["USER_POOL_ID"];
 export const handler = authedIdentity(async (_event, { identity, requestId }) => {
+const claims = _event.requestContext.authorizer?.jwt?.claims as
+  | Record<string, unknown>
+  | undefined;
+
+const claimString = (name: string): string => {
+  const value = claims?.[name];
+  return typeof value === "string" ? value : "";
+};
 if (USER_POOL_ID === undefined || USER_POOL_ID === "") {
 throw new Error("Missing required environment variable: USER_POOL_ID");
 }
@@ -32,7 +40,10 @@ agencyId,
 // The caller's current token predates these claims, so it must refresh
 // before GET /me will succeed. Saying so explicitly saves Suhani from
 // guessing why the retry still 403s.
-tokenRefreshRequired: true,
+tokenRefreshRequired:
+  claimString("custom:agency_id") !== agencyId ||
+  claimString("custom:role") !== "owner" ||
+  claimString("custom:onboarding_stage") !== "connect_ga4",
 };
 return ok(body, requestId);
 });

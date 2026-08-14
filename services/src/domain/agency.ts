@@ -1,6 +1,6 @@
 import type { AgencyDto,Branding,Plan } from "../contracts/me.ts";
 
-export const DEFAULT_PRIMARY_COLOR="#4B45D";
+export const DEFAULT_PRIMARY_COLOR = "#4B45D4";
 
 export const DEFAULT_BRANDING={
     primary_color: DEFAULT_PRIMARY_COLOR,
